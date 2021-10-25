@@ -1,0 +1,2513 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题 1</title>
+<style type="text/css">
+.style1 {
+	font-family: "Times New Roman", Times, serif;
+	font-size: xx-large;
+}
+td
+	{border-style: none;
+	border-color: inherit;
+	border-width: medium;
+	padding-top:1px;
+		padding-right:1px;
+		padding-left:1px;
+		color:black;
+		font-size:11.0pt;
+		font-weight:400;
+		font-style:normal;
+		text-decoration:none;
+		font-family:等线;
+		text-align:general;
+		vertical-align:middle;
+		white-space:nowrap;
+	}
+.style2 {
+	font-weight: bold;
+}
+.style3 {
+	border-collapse: collapse;
+	border: 5px solid #000000;
+}
+</style>
+</head>
+
+<body>
+
+<p class="style1"><strong># A5: Interactive visualizations</strong></p>
+<p><strong>#Goals:</strong></p>
+<p><strong>①：gain familiarity implementing interaction and animation techniques 
+for visualizations</strong></p>
+<p><strong>②：*effectiveness* of specific interaction and animation techniques 
+for your chosen data domain</strong></p>
+<p><strong>#Data：</strong></p>
+<p><strong>①：A subset of the Electricity Consumption and Occupancy (ECO) data 
+set</strong></p>
+<p><strong>②：The Data set from three households are provided, comprising power 
+consumption overall (from smart meters) and particular plugs/appliances per 
+second over a period of time. </strong></p>
+<p>③：The ECO (Electricity Consumption and Occupancy) data set is a comprehensive 
+open-source (Creative Commons License CC BY 4.0) data set for non-intrusive load 
+monitoring and occupancy detection research. </p>
+<p>It was collected in 6 Swiss households over a period of 8 months. For each of 
+the households, the ECO data set provides:<br />
+* 1 Hz aggregate consumption data. Each measurement contains data on current, 
+voltage, and phase shift for each of the three phases in the household.<br />
+* 1 Hz plug-level data measured from selected appliances.<br />
+* Occupancy information measured through a tablet computer (manual labeling) and 
+a passive infrared sensor (in some of the households).</p>
+<p>Statement： according to teacher&#39;s requirements, we choose three households: 
+04, 05, 06</p>
+<p>And the data set contains the below electricity equipments data:&nbsp;&nbsp;&nbsp;
+</p>
+<p>01: Fridge (no. days: 231, coverage: 98.53%)<br />
+02: Dryer (no. days: 231, coverage: 98.56%)<br />
+03: Coffee machine (no. days: 113, coverage: 85.36%)<br />
+04: Kettle (no. days: 203, coverage: 77.65%)<br />
+05: Washing machine (no. days: 231, coverage: 98.56%)<br />
+06: PC (no,. days: 66, coverage: 84.77%) <br />
+07: Freezer (no. days: 231, coverage: 98.56%)</p>
+<p>But every household is different, for example: the 04 household contains </p>
+<p>01: Fridge (no. days: 194, coverage: 97.01%)<br />
+02: Kitchen appliances (no. days: 194, coverage: 96.81%) (*)<br />
+03: Lamp (no. days: 170, coverage: 93.54%) (**)<br />
+04: Stereo and laptop (no. days: 169, coverage: 90.98%)<br />
+05: Freezer (no. days: 192, coverage: 93.08%)<br />
+06: Tablet (no. days: 189, coverage: 93.6%)<br />
+07: Entertainment (no. days: 186, coverage: 94.69%) (***)<br />
+08: Microwave (no. days: 194, coverage: 97.08%)</p>
+<p>So it is necessary for us to carefully deploy the three household.</p>
+<p><b>#Section one:</b></p>
+<p><strong>#Data Processing:</strong></p>
+<p>There is obvious problem, the data set is too big that we can not use the 
+software Pycharm or the python to process it, so I need to process the data set 
+by our hand, first I pick out the original data shows below(The household 
+04,2012.6.27)&nbsp; </p>
+<table cellpadding="0" cellspacing="0" width="2316" style="width: 1739pt" class="style3">
+	<colgroup>
+		<col width="266" style="mso-width-source: userset; mso-width-alt: 8512; width: 200pt" />
+		<col width="166" style="mso-width-source: userset; mso-width-alt: 5312; width: 125pt" />
+		<col width="72" style="width: 54pt" />
+		<col width="104" style="mso-width-source: userset; mso-width-alt: 3328; width: 78pt" />
+		<col width="133" style="mso-width-source: userset; mso-width-alt: 4256; width: 100pt" />
+		<col width="72" style="width: 54pt" />
+		<col width="150" style="mso-width-source: userset; mso-width-alt: 4800; width: 113pt" />
+		<col width="123" style="mso-width-source: userset; mso-width-alt: 3936; width: 92pt" />
+		<col width="72" span="3" style="width: 54pt" />
+		<col width="216" style="mso-width-source: userset; mso-width-alt: 6912; width: 162pt" />
+		<col width="205" style="mso-width-source: userset; mso-width-alt: 6560; width: 154pt" />
+		<col width="206" style="mso-width-source: userset; mso-width-alt: 6592; width: 155pt" />
+		<col width="196" style="mso-width-source: userset; mso-width-alt: 6272; width: 147pt" />
+		<col width="191" style="mso-width-source: userset; mso-width-alt: 6112; width: 143pt" />
+	</colgroup>
+	<tr height="19" style="height: 14.25pt">
+		<td height="19" class="xl66" width="266">
+		<span style="mso-spacerun: yes" class="style2">&nbsp;</span><b>Sum of real 
+		power over all phases</b></td>
+		<td class="style2" width="166">Powerl1</td>
+		<td class="style2" width="72">Powerl2</td>
+		<td class="style2" width="104">Powerl3</td>
+		<td class="style2" width="133">Neutral current</td>
+		<td class="style2" width="72">Currentl1</td>
+		<td class="style2" width="150">Currentl2</td>
+		<td class="style2" width="123">Currentl3</td>
+		<td class="style2" width="72">Voltagel1</td>
+		<td class="style2" width="72">Voltagel2</td>
+		<td class="style2" width="72">Voltagel3</td>
+		<td class="style2" width="216">phaseanglevoltagel2l1</td>
+		<td class="style2" width="205">phaseanglevoltagel3l1</td>
+		<td class="style2" width="206">phaseanglecurrentvoltagel1</td>
+		<td class="style2" width="196">phaseanglecurrentvoltagel2</td>
+		<td class="style2" width="191">phaseanglecurrentvoltagel3</td>
+	</tr>
+	<tr height="19" style="height: 14.25pt">
+		<td height="19" class="style2">475.051</td>
+		<td class="style2">406.225</td>
+		<td class="style2">0</td>
+		<td class="style2">68.826</td>
+		<td class="style2">2.6362</td>
+		<td class="style2">2.4465</td>
+		<td class="style2">0.0466</td>
+		<td class="style2">0.4254</td>
+		<td class="style2">234.22</td>
+		<td class="style2">235</td>
+		<td class="style2">234</td>
+		<td class="style2">240</td>
+		<td class="style2">120</td>
+		<td class="style2">44</td>
+		<td class="style2">270</td>
+		<td class="style2">350</td>
+	</tr>
+	<tr height="19" style="height: 14.25pt">
+		<td height="19" class="style2">473.888</td>
+		<td class="style2">406.037</td>
+		<td class="style2">0</td>
+		<td class="style2">67.851</td>
+		<td class="style2">2.6328</td>
+		<td class="style2">2.4413</td>
+		<td class="style2">0.0465</td>
+		<td class="style2">0.4174</td>
+		<td class="style2">234.33</td>
+		<td class="style2">235</td>
+		<td class="style2">234</td>
+		<td class="style2">240</td>
+		<td class="style2">120</td>
+		<td class="style2">44</td>
+		<td class="style2">270</td>
+		<td class="style2">349</td>
+	</tr>
+	<tr height="19" style="height: 14.25pt">
+		<td height="19" class="style2">479.664</td>
+		<td class="style2">406.141</td>
+		<td class="style2">0</td>
+		<td class="style2">73.523</td>
+		<td class="style2">2.6581</td>
+		<td class="style2">2.4465</td>
+		<td class="style2">0.0477</td>
+		<td class="style2">0.4645</td>
+		<td class="style2">234.33</td>
+		<td class="style2">235</td>
+		<td class="style2">234</td>
+		<td class="style2">240</td>
+		<td class="style2">120</td>
+		<td class="style2">44</td>
+		<td class="style2">270</td>
+		<td class="style2">350</td>
+	</tr>
+	<tr height="19" style="height: 14.25pt">
+		<td height="19" class="style2">473.089</td>
+		<td class="style2">407.104</td>
+		<td class="style2">0</td>
+		<td class="style2">65.985</td>
+		<td class="style2">2.6283</td>
+		<td class="style2">2.4465</td>
+		<td class="style2">0.0468</td>
+		<td class="style2">0.4005</td>
+		<td class="style2">234.33</td>
+		<td class="style2">235</td>
+		<td class="style2">234</td>
+		<td class="style2">240</td>
+		<td class="style2">120</td>
+		<td class="style2">44</td>
+		<td class="style2">270</td>
+		<td class="style2">349</td>
+	</tr>
+	<tr height="19" style="height: 14.25pt">
+		<td height="19" class="style2">476.251</td>
+		<td class="style2">406.037</td>
+		<td class="style2">0</td>
+		<td class="style2">70.214</td>
+		<td class="style2">2.6428</td>
+		<td class="style2">2.4465</td>
+		<td class="style2">0.0471</td>
+		<td class="style2">0.4372</td>
+		<td class="style2">234.33</td>
+		<td class="style2">235</td>
+		<td class="style2">234</td>
+		<td class="style2">240</td>
+		<td class="style2">120</td>
+		<td class="style2">44</td>
+		<td class="style2">270</td>
+		<td class="style2">350</td>
+	</tr>
+	<tr height="19" style="height: 14.25pt">
+		<td height="19" class="style2">476.226</td>
+		<td class="style2">406.188</td>
+		<td class="style2">0</td>
+		<td class="style2">70.038</td>
+		<td class="style2">2.6431</td>
+		<td class="style2">2.4465</td>
+		<td class="style2">0.0464</td>
+		<td class="style2">0.4376</td>
+		<td class="style2">234.33</td>
+		<td class="style2">235</td>
+		<td class="style2">234</td>
+		<td class="style2">240</td>
+		<td class="style2">120</td>
+		<td class="style2">44</td>
+		<td class="style2">270</td>
+		<td class="style2">350</td>
+	</tr>
+	<tr height="19" style="height: 14.25pt">
+		<td height="19" class="style2">477.017</td>
+		<td class="style2">406.235</td>
+		<td class="style2">0</td>
+		<td class="style2">70.782</td>
+		<td class="style2">2.6514</td>
+		<td class="style2">2.4465</td>
+		<td class="style2">0.0464</td>
+		<td class="style2">0.4411</td>
+		<td class="style2">234.45</td>
+		<td class="style2">235</td>
+		<td class="style2">234</td>
+		<td class="style2">240</td>
+		<td class="style2">120</td>
+		<td class="style2">44</td>
+		<td class="style2">270</td>
+		<td class="style2">349</td>
+	</tr>
+	<tr height="19" style="height: 14.25pt">
+		<td height="19" class="style2">477.532</td>
+		<td class="style2">406.679</td>
+		<td class="style2">0</td>
+		<td class="style2">70.853</td>
+		<td class="style2">2.6462</td>
+		<td class="style2">2.4465</td>
+		<td class="style2">0.0467</td>
+		<td class="style2">0.4432</td>
+		<td class="style2">234.33</td>
+		<td class="style2">235</td>
+		<td class="style2">234</td>
+		<td class="style2">240</td>
+		<td class="style2">120</td>
+		<td class="style2">44</td>
+		<td class="style2">270</td>
+		<td class="style2">350</td>
+	</tr>
+	<tr height="19" style="height: 14.25pt">
+		<td height="19" class="style2">479.495</td>
+		<td class="style2">405.905</td>
+		<td class="style2">0</td>
+		<td class="style2">73.59</td>
+		<td class="style2">2.6613</td>
+		<td class="style2">2.4465</td>
+		<td class="style2">0.0467</td>
+		<td class="style2">0.4649</td>
+		<td class="style2">234.33</td>
+		<td class="style2">235</td>
+		<td class="style2">234</td>
+		<td class="style2">240</td>
+		<td class="style2">120</td>
+		<td class="style2">45</td>
+		<td class="style2">270</td>
+		<td class="style2">350</td>
+	</tr>
+	<tr height="19" style="height: 14.25pt">
+		<td height="19" class="style2">478.778</td>
+		<td class="style2">406.339</td>
+		<td class="style2">0</td>
+		<td class="style2">72.439</td>
+		<td class="style2">2.6523</td>
+		<td class="style2">2.4465</td>
+		<td class="style2">0.0482</td>
+		<td class="style2">0.4543</td>
+		<td class="style2">234.33</td>
+		<td class="style2">235</td>
+		<td class="style2">234</td>
+		<td class="style2">240</td>
+		<td class="style2">120</td>
+		<td class="style2">44</td>
+		<td class="style2">270</td>
+		<td class="style2">350</td>
+	</tr>
+	<tr height="19" style="height: 14.25pt">
+		<td height="19" class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+		<td class="style2">······</td>
+	</tr>
+</table>
+<p>According to the original data, the first row(<span style="mso-spacerun: yes" class="style2">&nbsp;</span><b>Sum 
+of real power over all phases</b>) is our focus point, that is the real power of 
+all the electricity appliances.</p>
+<p>Because the amount of the data is too large, so I will get an average value 
+of each day&#39;s <span style="mso-spacerun: yes" class="style2">&nbsp;</span><b>Sum of 
+real power over all phases.</b></p>
+<table border="0" cellpadding="0" cellspacing="0" width="883" style="border-collapse: collapse; width: 663pt">
+	<colgroup>
+		<col width="101" /><col width="268" /><col width="265" />
+		<col width="249" />
+	</colgroup>
+	<tr height="55">
+		<td height="55" class="style2" width="101">Date</td>
+		<td class="xl69" width="268">
+		<span style="mso-spacerun: yes" class="style2">&nbsp;</span><b>Sum of real 
+		power over all phases-House hold 04</b></td>
+		<td class="xl69" width="265">
+		<span style="mso-spacerun: yes" class="style2">&nbsp;</span><b>Sum of real 
+		power over all phases-House hold 05</b></td>
+		<td class="xl69" width="249">
+		<span style="mso-spacerun: yes" class="style2">&nbsp;</span><b>Sum of real 
+		power over all phases-House hold 06</b></td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/6/27</td>
+		<td class="xl65">802.9200684</td>
+		<td class="xl65">157.19744</td>
+		<td class="xl65">790.4661748</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/6/28</td>
+		<td class="xl65">662.8000002</td>
+		<td class="xl65">141.8105639</td>
+		<td class="xl65">605.8784699</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/6/29</td>
+		<td class="xl65">678.4729735</td>
+		<td class="xl65">148.0444217</td>
+		<td class="xl65">647.5346603</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/6/30</td>
+		<td class="xl65">656.5205151</td>
+		<td class="xl65">299.8098018</td>
+		<td class="xl65">620.1535658</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/1</td>
+		<td class="xl65">742.36871</td>
+		<td class="xl65">136.9375119</td>
+		<td class="xl65">566.5721061</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/2</td>
+		<td class="xl70">688.161805</td>
+		<td class="xl65">142.6242822</td>
+		<td class="xl65">608.4609955</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/3</td>
+		<td class="xl65">779.7773757</td>
+		<td class="xl65">107.3534567</td>
+		<td class="xl65">580.7257873</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/4</td>
+		<td class="xl65">642.6845216</td>
+		<td class="xl65">139.4545671</td>
+		<td class="xl65">660.2425306</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/5</td>
+		<td class="xl65">604.4153468</td>
+		<td class="xl65">175.9931599</td>
+		<td class="xl65">596.3927158</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/6</td>
+		<td class="xl65">655.389606</td>
+		<td class="xl65">124.9408705</td>
+		<td class="xl65">605.2448686</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/7</td>
+		<td class="xl65">720.9086825</td>
+		<td class="xl70">216.1373869</td>
+		<td class="xl70">530.8511714</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/8</td>
+		<td class="xl65">718.0946012</td>
+		<td class="xl65">195.487735</td>
+		<td class="xl68">620.9702209</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/9</td>
+		<td class="xl65">670.5778254</td>
+		<td class="xl65">140.9580449</td>
+		<td class="xl68">610.6076456</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/10</td>
+		<td class="xl65">894.3645935</td>
+		<td class="xl65">151.7174467</td>
+		<td class="xl68">545.1705894</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/11</td>
+		<td class="xl65">595.1633387</td>
+		<td class="xl65">192.4308961</td>
+		<td class="xl68">614.4384454</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/12</td>
+		<td class="xl65">797.0890725</td>
+		<td class="xl65">188.7199871</td>
+		<td class="xl68">632.3439997</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/13</td>
+		<td class="xl65">751.7078102</td>
+		<td class="xl65">127.3690589</td>
+		<td class="xl68">667.1412354</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/14</td>
+		<td class="xl65">655.9125404</td>
+		<td class="xl65">162.6796453</td>
+		<td class="xl68">700.9390649</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/15</td>
+		<td class="xl65">570.7013851</td>
+		<td class="xl65">87.62306072</td>
+		<td class="xl68">569.8592893</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/16</td>
+		<td class="xl65">439.265299</td>
+		<td class="xl65">86.81730256</td>
+		<td class="xl68">606.75342</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/17</td>
+		<td class="xl65">433.0661151</td>
+		<td class="xl65">87.38847498</td>
+		<td class="xl68">662.2953888</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/18</td>
+		<td class="xl65">437.0785982</td>
+		<td class="xl65">88.85782459</td>
+		<td class="xl68">571.8254451</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/19</td>
+		<td class="xl65">439.6568395</td>
+		<td class="xl65">89.44983014</td>
+		<td class="xl68">664.2015013</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/20</td>
+		<td class="xl65">434.5499426</td>
+		<td class="xl65">88.56175708</td>
+		<td class="xl68">593.2855174</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/21</td>
+		<td class="xl65">428.9400183</td>
+		<td class="xl65">111.132964</td>
+		<td class="xl68">738.180433</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/22</td>
+		<td class="xl65">490.7441806</td>
+		<td class="xl65">456.8972163</td>
+		<td class="xl68">592.9684391</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/23</td>
+		<td class="xl65">759.2691682</td>
+		<td class="xl65">461.04085</td>
+		<td class="xl68">567.0382018</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/24</td>
+		<td class="xl65">706.9127741</td>
+		<td class="xl65">119.5428266</td>
+		<td class="xl68">641.8705493</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/25</td>
+		<td class="xl65">535.6396148</td>
+		<td class="xl65">133.6684641</td>
+		<td class="xl68">591.0405916</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/26</td>
+		<td class="xl65">523.4373161</td>
+		<td class="xl65">119.5472899</td>
+		<td class="xl68">687.2682049</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/27</td>
+		<td class="xl65">569.2565446</td>
+		<td class="xl65">103.6067188</td>
+		<td class="xl68">579.2999109</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/28</td>
+		<td class="xl65">627.934265</td>
+		<td class="xl65">326.2259056</td>
+		<td class="xl68">660.8658531</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/29</td>
+		<td class="xl65">619.5903887</td>
+		<td class="xl65">362.0126097</td>
+		<td class="xl68">573.6745033</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/30</td>
+		<td class="xl65">806.3875707</td>
+		<td class="xl65">432.69047</td>
+		<td class="xl68">619.4974737</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/7/31</td>
+		<td class="xl65">780.1325356</td>
+		<td class="xl65">118.6547461</td>
+		<td class="xl68">619.5208311</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/1</td>
+		<td class="xl65">724.9924624</td>
+		<td class="xl65">144.5533941</td>
+		<td class="xl68">546.7539961</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/2</td>
+		<td class="xl65">626.1632594</td>
+		<td class="xl65">166.3859345</td>
+		<td class="xl68">631.8651835</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/3</td>
+		<td class="xl65">704.7050626</td>
+		<td class="xl65">111.3717817</td>
+		<td class="xl68">616.3063815</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/4</td>
+		<td class="xl65">948.3148342</td>
+		<td class="xl65">100.3459612</td>
+		<td class="xl68">769.4618054</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/5</td>
+		<td class="xl65">759.9560499</td>
+		<td class="xl65">176.0325771</td>
+		<td class="xl68">588.3979944</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/6</td>
+		<td class="xl65">666.6501646</td>
+		<td class="xl65">317.8963833</td>
+		<td class="xl68">839.8656367</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/7</td>
+		<td class="xl65">734.4463879</td>
+		<td class="xl65">227.7362864</td>
+		<td class="xl68">687.3634436</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/8</td>
+		<td class="xl65">702.6810927</td>
+		<td class="xl65">94.36531821</td>
+		<td class="xl68">802.0283958</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/9</td>
+		<td class="xl65">863.6224556</td>
+		<td class="xl65">91.07666391</td>
+		<td class="xl68">892.6201378</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/10</td>
+		<td class="xl65">601.3313935</td>
+		<td class="xl65">114.0439348</td>
+		<td class="xl68">731.8903466</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/11</td>
+		<td class="xl65">719.9329452</td>
+		<td class="xl65">158.1469293</td>
+		<td class="xl68">642.3500304</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/12</td>
+		<td class="xl65">830.2783692</td>
+		<td class="xl65">122.178378</td>
+		<td class="xl68">553.5499667</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/13</td>
+		<td class="xl65">598.4181533</td>
+		<td class="xl65">145.347806</td>
+		<td class="xl68">663.9391791</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/14</td>
+		<td class="xl65">689.0891628</td>
+		<td class="xl65">149.2216418</td>
+		<td class="xl68">620.7274885</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/15</td>
+		<td class="xl65">686.8000189</td>
+		<td class="xl65">93.37970714</td>
+		<td class="xl68">773.3101064</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/16</td>
+		<td class="xl65">783.4452436</td>
+		<td class="xl65">108.07071</td>
+		<td class="xl68">605.1383379</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/17</td>
+		<td class="xl65">624.7533777</td>
+		<td class="xl65">107.7713347</td>
+		<td class="xl68">645.8040871</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/18</td>
+		<td class="xl65">964.3693357</td>
+		<td class="xl65">166.0674241</td>
+		<td class="xl68">598.3687623</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/19</td>
+		<td class="xl65">633.6570175</td>
+		<td class="xl65">346.8495925</td>
+		<td class="xl68">580.4740579</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/20</td>
+		<td class="xl65">965.7769523</td>
+		<td class="xl65">131.8788275</td>
+		<td class="xl68">675.9188936</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/21</td>
+		<td class="xl65">760.2520408</td>
+		<td class="xl65">127.9462885</td>
+		<td class="xl68">735.4789149</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/22</td>
+		<td class="xl65">737.2796146</td>
+		<td class="xl65">115.9285299</td>
+		<td class="xl68">616.7629224</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/23</td>
+		<td class="xl65">733.6158051</td>
+		<td class="xl65">101.9531071</td>
+		<td class="xl68">562.9011422</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/24</td>
+		<td class="xl65">668.981297</td>
+		<td class="xl65">146.0784405</td>
+		<td class="xl68">661.5804026</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/25</td>
+		<td class="xl65">690.8510087</td>
+		<td class="xl65">196.5876347</td>
+		<td class="xl68">662.0711971</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/26</td>
+		<td class="xl65">724.7926791</td>
+		<td class="xl65">158.60948</td>
+		<td class="xl68">552.0145849</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/27</td>
+		<td class="xl65">742.8998648</td>
+		<td class="xl65">156.1192947</td>
+		<td class="xl68">637.5303328</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/28</td>
+		<td class="xl65">693.4977467</td>
+		<td class="xl65">114.6907962</td>
+		<td class="xl68">593.4527536</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/29</td>
+		<td class="xl65">645.7061244</td>
+		<td class="xl65">102.9798434</td>
+		<td class="xl68">579.4971204</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/30</td>
+		<td class="xl65">831.3243936</td>
+		<td class="xl65">168.7209065</td>
+		<td class="xl68">617.3514473</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/8/31</td>
+		<td class="xl65">531.6247136</td>
+		<td class="xl65">173.1631769</td>
+		<td class="xl68">613.0359065</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/1</td>
+		<td class="xl65">630.3064315</td>
+		<td class="xl65">306.7565968</td>
+		<td class="xl68">598.6863534</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/2</td>
+		<td class="xl65">580.6527812</td>
+		<td class="xl65">181.2656233</td>
+		<td class="xl68">594.9188784</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/3</td>
+		<td class="xl65">835.9309512</td>
+		<td class="xl65">116.221562</td>
+		<td class="xl68">626.3248064</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/4</td>
+		<td class="xl65">682.987658</td>
+		<td class="xl65">149.4102367</td>
+		<td class="xl68">650.3366813</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/5</td>
+		<td class="xl65">999.805859</td>
+		<td class="xl65">149.2552298</td>
+		<td class="xl68">663.1075526</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/6</td>
+		<td class="xl65">715.1625257</td>
+		<td class="xl65">109.567564</td>
+		<td class="xl68">497.3966648</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/7</td>
+		<td class="xl65">699.0795205</td>
+		<td class="xl65">127.827005</td>
+		<td class="xl68">0</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/8</td>
+		<td class="xl65">626.5686182</td>
+		<td class="xl65">211.8459371</td>
+		<td class="xl68">0</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/9</td>
+		<td class="xl65">629.4102319</td>
+		<td class="xl65">201.4209779</td>
+		<td class="xl68">0</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/10</td>
+		<td class="xl65">847.6925187</td>
+		<td class="xl65">106.7669928</td>
+		<td class="xl68">0</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/11</td>
+		<td class="xl65">592.1481483</td>
+		<td class="xl65">145.5105617</td>
+		<td class="xl68">324.7240808</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/12</td>
+		<td class="xl65">705.5073643</td>
+		<td class="xl65">87.27134587</td>
+		<td class="xl68">636.9072216</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/13</td>
+		<td class="xl65">771.7952386</td>
+		<td class="xl65">81.36506338</td>
+		<td class="xl68">507.7897023</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/14</td>
+		<td class="xl65">401.7857749</td>
+		<td class="xl65">122.9030753</td>
+		<td class="xl68">499.3729422</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/15</td>
+		<td class="xl65">759.3436734</td>
+		<td class="xl65">95.22835079</td>
+		<td class="xl68">490.4804461</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/16</td>
+		<td class="xl65">623.4073055</td>
+		<td class="xl65">154.1974072</td>
+		<td class="xl68">500.1369089</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/17</td>
+		<td class="xl65">651.2089508</td>
+		<td class="xl65">120.7964852</td>
+		<td class="xl68">481.7673085</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/18</td>
+		<td class="xl65">617.214876</td>
+		<td class="xl65">160.2472673</td>
+		<td class="xl68">475.6309894</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/19</td>
+		<td class="xl65">643.9904485</td>
+		<td class="xl65">96.67462895</td>
+		<td class="xl68">465.6272509</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/20</td>
+		<td class="xl65">852.7873846</td>
+		<td class="xl65">85.21166215</td>
+		<td class="xl68">588.0048973</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/21</td>
+		<td class="xl65">715.8499371</td>
+		<td class="xl65">77.69708774</td>
+		<td class="xl68">792.3223763</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/22</td>
+		<td class="xl65">724.6954206</td>
+		<td class="xl65">230.8891469</td>
+		<td class="xl68">497.790654</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/23</td>
+		<td class="xl65">778.2843677</td>
+		<td class="xl65">352.3150873</td>
+		<td class="xl68">606.1254966</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/24</td>
+		<td class="xl65">1085.563842</td>
+		<td class="xl65">220.2473192</td>
+		<td class="xl68">664.7409194</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/25</td>
+		<td class="xl65">1097.93768</td>
+		<td class="xl65">175.6461584</td>
+		<td class="xl68">623.9839145</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/26</td>
+		<td class="xl65">908.241898</td>
+		<td class="xl65">172.7508181</td>
+		<td class="xl68">587.715426</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/27</td>
+		<td class="xl65">813.5535767</td>
+		<td class="xl65">136.3926359</td>
+		<td class="xl68">631.3309933</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/28</td>
+		<td class="xl65">756.579986</td>
+		<td class="xl65">109.0664736</td>
+		<td class="xl68">605.501506</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/29</td>
+		<td class="xl65">956.2453001</td>
+		<td class="xl65">302.3330733</td>
+		<td class="xl68">636.9201458</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/9/30</td>
+		<td class="xl65">1069.602042</td>
+		<td class="xl65">541.0593884</td>
+		<td class="xl68">773.8835515</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/1</td>
+		<td class="xl65">747.0023415</td>
+		<td class="xl65">612.0222764</td>
+		<td class="xl68">661.782609</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/2</td>
+		<td class="xl65">556.5751098</td>
+		<td class="xl65">384.7876919</td>
+		<td class="xl68">680.0267546</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/3</td>
+		<td class="xl65">459.1307658</td>
+		<td class="xl65">238.7565098</td>
+		<td class="xl68">721.6951416</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/4</td>
+		<td class="xl65">522.6602645</td>
+		<td class="xl65">163.4645725</td>
+		<td class="xl68">685.1493943</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/5</td>
+		<td class="xl65">818.5546114</td>
+		<td class="xl65">81.59592376</td>
+		<td class="xl68">633.3233663</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/6</td>
+		<td class="xl65">696.4762772</td>
+		<td class="xl65">81.9500356</td>
+		<td class="xl68">587.6072081</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/7</td>
+		<td class="xl65">892.1959199</td>
+		<td class="xl65">82.12324881</td>
+		<td class="xl68">817.3146634</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/8</td>
+		<td class="xl65">836.2055247</td>
+		<td class="xl65">117.1261278</td>
+		<td class="xl68">781.0298757</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/9</td>
+		<td class="xl65">724.8367338</td>
+		<td class="xl65">478.5733959</td>
+		<td class="xl68">886.3451257</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/10</td>
+		<td class="xl65">1001.855028</td>
+		<td class="xl65">446.5852577</td>
+		<td class="xl68">1074.96563</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/11</td>
+		<td class="xl65">757.5774377</td>
+		<td class="xl65">186.4972866</td>
+		<td class="xl68">884.8716729</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/12</td>
+		<td class="xl65">831.8008236</td>
+		<td class="xl65">117.1906307</td>
+		<td class="xl68">724.2098224</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/13</td>
+		<td class="xl65">670.461239</td>
+		<td class="xl65">251.2996055</td>
+		<td class="xl68">677.5106791</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/14</td>
+		<td class="xl65">1026.388864</td>
+		<td class="xl65">206.0056774</td>
+		<td class="xl68">778.4927945</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/15</td>
+		<td class="xl65">1007.504747</td>
+		<td class="xl65">163.0154176</td>
+		<td class="xl68">972.9125668</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/16</td>
+		<td class="xl65">825.217707</td>
+		<td class="xl65">119.223497</td>
+		<td class="xl68">861.796319</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/17</td>
+		<td class="xl65">869.9430142</td>
+		<td class="xl65">127.8458391</td>
+		<td class="xl68">787.292297</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/18</td>
+		<td class="xl65">933.428301</td>
+		<td class="xl65">194.4852175</td>
+		<td class="xl68">830.3222759</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/19</td>
+		<td class="xl65">865.3266404</td>
+		<td class="xl65">132.4514678</td>
+		<td class="xl68">803.4751717</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/20</td>
+		<td class="xl65">802.0849824</td>
+		<td class="xl65">167.8426344</td>
+		<td class="xl68">684.2332079</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/21</td>
+		<td class="xl65">780.721058</td>
+		<td class="xl65">156.5501601</td>
+		<td class="xl68">688.6902411</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/22</td>
+		<td class="xl65">863.900044</td>
+		<td class="xl65">144.9482116</td>
+		<td class="xl68">827.823567</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/23</td>
+		<td class="xl65">673.550378</td>
+		<td class="xl65">330.2934883</td>
+		<td class="xl68">799.7226042</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/24</td>
+		<td class="xl65">893.0924429</td>
+		<td class="xl65">109.5329035</td>
+		<td class="xl68">1090.855267</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/25</td>
+		<td class="xl65">889.9108561</td>
+		<td class="xl65">122.230043</td>
+		<td class="xl68">838.615381</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/26</td>
+		<td class="xl65">853.927829</td>
+		<td class="xl65">161.8982853</td>
+		<td class="xl68">863.6058964</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/27</td>
+		<td class="xl65">931.1299773</td>
+		<td class="xl65">190.4745364</td>
+		<td class="xl68">1471.65493</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/28</td>
+		<td class="xl65">1071.26233</td>
+		<td class="xl65">504.9433681</td>
+		<td class="xl68">933.61811</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/29</td>
+		<td class="xl65">1543.525568</td>
+		<td class="xl65">713.1170495</td>
+		<td class="xl68">901.0449467</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/30</td>
+		<td class="xl65">1458.659425</td>
+		<td class="xl65">362.297089</td>
+		<td class="xl68">838.4018845</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/10/31</td>
+		<td class="xl65">1414.556915</td>
+		<td class="xl65">123.8237905</td>
+		<td class="xl68">765.1430132</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/1</td>
+		<td class="xl65">1420.873193</td>
+		<td class="xl65">161.7653941</td>
+		<td class="xl68">793.6002319</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/2</td>
+		<td class="xl65">1313.63666</td>
+		<td class="xl65">134.0652518</td>
+		<td class="xl68">1096.114394</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/3</td>
+		<td class="xl65">1150.895999</td>
+		<td class="xl65">145.625465</td>
+		<td class="xl68">632.1135722</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/4</td>
+		<td class="xl65">1058.223825</td>
+		<td class="xl65">184.1524706</td>
+		<td class="xl68">623.9889605</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/5</td>
+		<td class="xl65">1121.517461</td>
+		<td class="xl65">108.2248377</td>
+		<td class="xl68">732.0711914</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/6</td>
+		<td class="xl65">881.335355</td>
+		<td class="xl65">135.6427194</td>
+		<td class="xl68">716.5598587</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/7</td>
+		<td class="xl65">821.5854504</td>
+		<td class="xl65">114.1977093</td>
+		<td class="xl68">750.8243724</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/8</td>
+		<td class="xl65">962.4223606</td>
+		<td class="xl65">79.99080091</td>
+		<td class="xl68">829.1463986</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/9</td>
+		<td class="xl65">1131.95792</td>
+		<td class="xl65">102.3884785</td>
+		<td class="xl68">1235.507136</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/10</td>
+		<td class="xl65">1196.984284</td>
+		<td class="xl65">260.0238206</td>
+		<td class="xl68">890.3386426</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/11</td>
+		<td class="xl65">1235.462367</td>
+		<td class="xl65">292.5764839</td>
+		<td class="xl68">1000.874629</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/12</td>
+		<td class="xl65">1329.85079</td>
+		<td class="xl65">338.0989647</td>
+		<td class="xl68">932.9229116</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/13</td>
+		<td class="xl65">1132.920888</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1132.149781</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/14</td>
+		<td class="xl65">1197.472512</td>
+		<td class="xl65">0</td>
+		<td class="xl68">856.3190389</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/15</td>
+		<td class="xl65">1389.080698</td>
+		<td class="xl65">0</td>
+		<td class="xl68">696.0004463</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/16</td>
+		<td class="xl65">1096.547702</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1176.361579</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/17</td>
+		<td class="xl65">1152.533894</td>
+		<td class="xl65">0</td>
+		<td class="xl68">806.6678258</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/18</td>
+		<td class="xl65">1133.647776</td>
+		<td class="xl65">0</td>
+		<td class="xl68">692.210698</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/19</td>
+		<td class="xl65">1041.32852</td>
+		<td class="xl65">0</td>
+		<td class="xl68">775.556369</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/20</td>
+		<td class="xl65">1343.655158</td>
+		<td class="xl65">0</td>
+		<td class="xl68">769.6692134</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/21</td>
+		<td class="xl65">1177.128823</td>
+		<td class="xl65">0</td>
+		<td class="xl68">877.3188491</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/22</td>
+		<td class="xl65">1115.335135</td>
+		<td class="xl65">0</td>
+		<td class="xl68">705.964448</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/23</td>
+		<td class="xl65">905.7227327</td>
+		<td class="xl65">0</td>
+		<td class="xl68">832.0224334</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/24</td>
+		<td class="xl65">1102.623434</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1175.129064</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/25</td>
+		<td class="xl65">1084.509133</td>
+		<td class="xl65">0</td>
+		<td class="xl68">699.8584886</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/26</td>
+		<td class="xl65">1032.307437</td>
+		<td class="xl65">0</td>
+		<td class="xl68">725.1860097</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/27</td>
+		<td class="xl65">875.5973581</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1106.329991</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/28</td>
+		<td class="xl65">868.9115152</td>
+		<td class="xl65">0</td>
+		<td class="xl68">912.0750305</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/29</td>
+		<td class="xl65">953.1887055</td>
+		<td class="xl65">0</td>
+		<td class="xl68">795.5851919</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/11/30</td>
+		<td class="xl65">887.6053895</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1208.233956</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/1</td>
+		<td class="xl65">944.1325615</td>
+		<td class="xl65">0</td>
+		<td class="xl68">853.820097</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/2</td>
+		<td class="xl65">798.1230519</td>
+		<td class="xl65">0</td>
+		<td class="xl68">853.6084107</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/3</td>
+		<td class="xl65">1076.274896</td>
+		<td class="xl65">0</td>
+		<td class="xl68">899.0637402</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/4</td>
+		<td class="xl65">1190.222106</td>
+		<td class="xl65">0</td>
+		<td class="xl68">847.8025111</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/5</td>
+		<td class="xl65">1518.042573</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1138.75845</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/6</td>
+		<td class="xl65">1657.073201</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1527.086948</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/7</td>
+		<td class="xl65">1720.228322</td>
+		<td class="xl65">0</td>
+		<td class="xl68">929.4969876</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/8</td>
+		<td class="xl65">1698.695999</td>
+		<td class="xl65">0</td>
+		<td class="xl68">916.6846341</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/9</td>
+		<td class="xl65">1535.853954</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1129.972619</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/10</td>
+		<td class="xl65">1656.69049</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1248.470157</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/11</td>
+		<td class="xl65">1409.648539</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1005.702496</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/12</td>
+		<td class="xl65">1501.732042</td>
+		<td class="xl65">0</td>
+		<td class="xl68">786.5556394</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/13</td>
+		<td class="xl65">2566.745004</td>
+		<td class="xl65">0</td>
+		<td class="xl68">709.680572</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/14</td>
+		<td class="xl65">1330.941048</td>
+		<td class="xl65">0</td>
+		<td class="xl68">743.6310136</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/15</td>
+		<td class="xl65">1591.541159</td>
+		<td class="xl65">0</td>
+		<td class="xl68">672.3446944</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/16</td>
+		<td class="xl65">1687.517493</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1660.877</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/17</td>
+		<td class="xl65">1587.394626</td>
+		<td class="xl65">0</td>
+		<td class="xl68">775.8787168</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/18</td>
+		<td class="xl65">1606.957319</td>
+		<td class="xl65">0</td>
+		<td class="xl68">650.6608376</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/19</td>
+		<td class="xl65">1412.3151</td>
+		<td class="xl65">0</td>
+		<td class="xl68">792.8252563</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/20</td>
+		<td class="xl65">461.8243892</td>
+		<td class="xl65">0</td>
+		<td class="xl68">794.2780122</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/21</td>
+		<td class="xl65">572.4602209</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1285.396216</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/22</td>
+		<td class="xl65">917.0146723</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1079.68114</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/23</td>
+		<td class="xl65">913.9085423</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1257.802311</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/24</td>
+		<td class="xl65">839.4660369</td>
+		<td class="xl65">0</td>
+		<td class="xl68">877.6771521</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/25</td>
+		<td class="xl65">666.9728947</td>
+		<td class="xl65">0</td>
+		<td class="xl68">852.9565072</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/26</td>
+		<td class="xl65">767.2528396</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1257.176436</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/27</td>
+		<td class="xl65">387.9304107</td>
+		<td class="xl65">0</td>
+		<td class="xl68">900.506537</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/28</td>
+		<td class="xl65">417.0472072</td>
+		<td class="xl65">0</td>
+		<td class="xl68">777.430955</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/29</td>
+		<td class="xl65">621.3418747</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1802.453375</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/30</td>
+		<td class="xl65">465.2063684</td>
+		<td class="xl65">0</td>
+		<td class="xl68">796.1577752</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2012/12/31</td>
+		<td class="xl65">526.2529505</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1038.21492</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/1</td>
+		<td class="xl65">474.9116763</td>
+		<td class="xl65">0</td>
+		<td class="xl68">957.5081125</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/2</td>
+		<td class="xl65">563.2818061</td>
+		<td class="xl65">0</td>
+		<td class="xl68">797.4251921</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/3</td>
+		<td class="xl65">489.6389338</td>
+		<td class="xl65">0</td>
+		<td class="xl68">903.1294828</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/4</td>
+		<td class="xl65">371.949704</td>
+		<td class="xl65">0</td>
+		<td class="xl68">1079.109055</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/5</td>
+		<td class="xl65">439.3975337</td>
+		<td class="xl65">586.8334759</td>
+		<td class="xl68">1568.684959</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/6</td>
+		<td class="xl65">343.4747942</td>
+		<td class="xl65">1060.676427</td>
+		<td class="xl68">882.1284191</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/7</td>
+		<td class="xl65">715.1379935</td>
+		<td class="xl65">493.3724549</td>
+		<td class="xl68">1146.470419</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/8</td>
+		<td class="xl65">385.4008225</td>
+		<td class="xl65">1163.023532</td>
+		<td class="xl68">810.1488577</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/9</td>
+		<td class="xl65">460.4421289</td>
+		<td class="xl65">153.518441</td>
+		<td class="xl68">845.1897775</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/10</td>
+		<td class="xl65">683.4450811</td>
+		<td class="xl65">279.7808828</td>
+		<td class="xl68">731.4692925</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/11</td>
+		<td class="xl65">663.0211846</td>
+		<td class="xl65">148.945909</td>
+		<td class="xl68">1224.23328</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/12</td>
+		<td class="xl65">386.0551884</td>
+		<td class="xl65">119.7902303</td>
+		<td class="xl68">746.6902712</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/13</td>
+		<td class="xl65">456.6194867</td>
+		<td class="xl65">158.2564579</td>
+		<td class="xl68">741.2064423</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/14</td>
+		<td class="xl65">654.8651079</td>
+		<td class="xl65">133.2100958</td>
+		<td class="xl68">1184.623635</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/15</td>
+		<td class="xl65">531.5853266</td>
+		<td class="xl65">82.33730891</td>
+		<td class="xl68">1223.19387</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/16</td>
+		<td class="xl65">653.0397542</td>
+		<td class="xl65">100.2497727</td>
+		<td class="xl68">1142.358598</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/17</td>
+		<td class="xl65">1110.409849</td>
+		<td class="xl65">98.96635102</td>
+		<td class="xl68">992.287881</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/18</td>
+		<td class="xl65">699.7265389</td>
+		<td class="xl65">177.5778577</td>
+		<td class="xl68">1176.580994</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/19</td>
+		<td class="xl65">603.4968141</td>
+		<td class="xl65">153.82357</td>
+		<td class="xl68">1094.265846</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/20</td>
+		<td class="xl65">363.6471642</td>
+		<td class="xl65">940.3411311</td>
+		<td class="xl68">858.200302</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/21</td>
+		<td class="xl65">457.3547941</td>
+		<td class="xl65">860.9573573</td>
+		<td class="xl68">1236.81853</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/22</td>
+		<td class="xl65">693.1991644</td>
+		<td class="xl65">149.8051847</td>
+		<td class="xl68">891.3522422</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/23</td>
+		<td class="xl65">618.0661975</td>
+		<td class="xl65">97.12494241</td>
+		<td class="xl68">746.790991</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/24</td>
+		<td class="xl65">404.9445044</td>
+		<td class="xl65">118.6949708</td>
+		<td class="xl68">940.0122112</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/25</td>
+		<td class="xl65">821.5374697</td>
+		<td class="xl65">125.9570856</td>
+		<td class="xl68">1310.581737</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/26</td>
+		<td class="xl65">783.4737924</td>
+		<td class="xl65">210.043034</td>
+		<td class="xl68">820.2099862</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/27</td>
+		<td class="xl65">593.0554175</td>
+		<td class="xl65">178.7970374</td>
+		<td class="xl68">782.4228737</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/28</td>
+		<td class="xl65">522.8736182</td>
+		<td class="xl65">121.7017185</td>
+		<td class="xl68">764.631309</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/29</td>
+		<td class="xl65">324.788302</td>
+		<td class="xl65">111.4611896</td>
+		<td class="xl68">738.8451114</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/30</td>
+		<td class="xl65">444.9706843</td>
+		<td class="xl65">139.9420093</td>
+		<td class="xl68">704.7816536</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl66">2013/1/31</td>
+		<td class="xl65">426.6147268</td>
+		<td class="xl65">1099.936633</td>
+		<td class="xl68">1070.580117</td>
+	</tr>
+</table>
+<p><b>#Data process code:</b></p>
+<pre style="background-color: #ffffff; color: #080808; font-family: 'JetBrains Mono',monospace; font-size: 9.8pt;"><span style="color: #0033b3;">import </span>pandas <span style="color: #0033b3;">as </span>pd
+<span style="color: #0033b3;">import </span>os
+<span style="color: #0033b3;">import </span>xlwt
+<span style="color: #0033b3;">def </span><span style="color: #000000;">main</span>():
+    filename = os.listdir(<span style="color: #008080; font-weight: bold;">r&#39;C:\Users\13448\Desktop\new\data\05_sm_csv\05&#39;</span>)
+    <span style="color: #0033b3;">for </span>i <span style="color: #0033b3;">in </span><span style="color: #000080;">range</span>(<span style="color: #000080;">len</span>(filename)):
+        <span style="color: #0033b3;">try</span>:
+            df = pd.read_csv(<span style="color: #008080; font-weight: bold;">&#39;C://Users//13448//Desktop//new//data//05_sm_csv//05//&#39; </span>+ filename[i])<span style="color: #8c8c8c; font-style: italic; font-family: '宋体',monospace;">
+            </span>df=df.iloc[:,<span style="color: #1750eb;">0</span>].sum()/<span style="color: #1750eb;">86400
+            </span><span style="color: #000080;">print</span>(df)
+        <span style="color: #0033b3;">except </span><span style="color: #000080;">Exception </span><span style="color: #0033b3;">as </span><span style="color: #808080;">e</span>:
+            <span style="color: #0033b3;">pass
+        continue</span></pre>
+<p><b>According to the process data, I made it visualization, but household 
+05&#39;s data is not perfect, 2012/11/13-2013/1/4 data absence, and the household 
+06&#39;s data is also not perfect 2012/9/6-2012/9/10 data absence.</b></p>
+<p><b>So I need to illustrate this situation in our visualization progress.</b></p>
+<p><img src="imgF.jpg" /></p>
+<p>I plot the data which shows above on the html use the animation and 
+Interactive visualizations aspects. Here, because I do not have the 
+household06&#39;s data from&nbsp; <b>2012/11/13 to 2013/1/4, so I set it as 0(ZERO) 
+to represent it.</b></p>
+<p><b>As the trend shows on the figure with the winter coming, every household&#39;s 
+consume electricity amount is rising day by day. </b></p>
+<p><b>Animation and interaction in this section:</b></p>
+<p>①：There are indicate labels on the data, and several statement besides the 
+chart, and when you choose any household data, it will turn into another data 
+area which only has one household, you can carefully watch it.</p>
+<p>②：The zoom of&nbsp; data area can be expand by your mouse, when you click 
+your mouse and pull up your mouse while the zoom of data area will expand 
+itself.</p>
+<p>③：Also you can get shortcuts through the tool box on the top of the chart.</p>
+<p><img alt="" src="img22.jpg" height="346" width="700" /></p>
+<p>#<b>Under python-data plotly key code:</b></p>
+<pre style="background-color: #ffffff; color: #080808; font-family: 'JetBrains Mono',monospace; font-size: 9.8pt;">data = [trace0, trace1, trace2]
+layout = go.Layout(
+    <span style="color: #660099;">yaxis</span>=<span style="color: #000080;">dict</span>(<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;The Sum of real power over all phases/W&#39;</span>,
+            <span style="color: #660099;">titlefont</span>=<span style="color: #000080;">dict</span>(<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;rgb(148, 103, 189)&#39;</span>,<span style="color: #660099;">size</span>=<span style="color: #1750eb;">24</span>),
+            <span style="color: #660099;">tickfont</span>=<span style="color: #000080;">dict</span>(<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;rgb(148, 103, 189)&#39;</span>,<span style="color: #660099;">size </span>= <span style="color: #1750eb;">24</span>,),
+            ),
+    <span style="color: #660099;">xaxis</span>=<span style="color: #000080;">dict</span>(<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Time[year/month/day]&#39;</span>,
+            <span style="color: #660099;">titlefont</span>=<span style="color: #000080;">dict</span>(<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;rgb(148, 103, 189)&#39;</span>,<span style="color: #660099;">size</span>=<span style="color: #1750eb;">24</span>),
+            <span style="color: #660099;">tickfont</span>=<span style="color: #000080;">dict</span>(<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;rgb(148, 103, 189)&#39;</span>,<span style="color: #660099;">size </span>= <span style="color: #1750eb;">24</span>,),
+            <span style="color: #660099;">tickangle</span>=<span style="color: #1750eb;">270</span>,
+            ),
+    <span style="color: #660099;">annotations</span>=[
+
+    <span style="color: #000080;">dict</span>(<span style="color: #660099;">x</span>=<span style="color: #1750eb;">2</span>,<span style="color: #660099;">y</span>=<span style="color: #1750eb;">5</span>,
+        <span style="color: #660099;">xref</span>=<span style="color: #008080; font-weight: bold;">&#39;x&#39;</span>,<span style="color: #660099;">yref</span>=<span style="color: #008080; font-weight: bold;">&#39;y&#39;</span>,
+        <span style="color: #660099;">text</span>=<span style="color: #008080; font-weight: bold;">&#39;household04&#39;</span>,
+        <span style="color: #660099;">font</span>=<span style="color: #000080;">dict</span>(<span style="color: #660099;">family</span>=<span style="color: #008080; font-weight: bold;">&#39;Courier New, monospace&#39;</span>,<span style="color: #660099;">size</span>=<span style="color: #1750eb;">16</span>,<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;#ffffff&#39;</span>),
+        <span style="color: #660099;">showarrow</span>=<span style="color: #0033b3;">True</span>,
+        <span style="color: #660099;">ax</span>=<span style="color: #1750eb;">20</span>,<span style="color: #660099;">ay</span>=-<span style="color: #1750eb;">30</span>,<span style="color: #660099;">align</span>=<span style="color: #008080; font-weight: bold;">&#39;center&#39;</span>,<span style="color: #660099;">arrowhead</span>=<span style="color: #1750eb;">2</span>,<span style="color: #660099;">arrowsize</span>=<span style="color: #1750eb;">1</span>,<span style="color: #660099;">arrowwidth</span>=<span style="color: #1750eb;">2</span>,<span style="color: #660099;">arrowcolor</span>=<span style="color: #008080; font-weight: bold;">&#39;#636363&#39;</span>,
+        <span style="color: #660099;">bordercolor</span>=<span style="color: #008080; font-weight: bold;">&#39;#c7c7c7&#39;</span>,<span style="color: #660099;">borderwidth</span>=<span style="color: #1750eb;">2</span>,<span style="color: #660099;">borderpad</span>=<span style="color: #1750eb;">4</span>,<span style="color: #660099;">bgcolor</span>=<span style="color: #008080; font-weight: bold;">&#39;#ff7f0e&#39;</span>,<span style="color: #660099;">opacity</span>=<span style="color: #1750eb;">0.8</span>),
+
+<span style="color: #000080;">dict</span>(<span style="color: #660099;">x</span>=<span style="color: #1750eb;">8</span>,<span style="color: #660099;">y</span>=<span style="color: #1750eb;">230</span>,
+        <span style="color: #660099;">xref</span>=<span style="color: #008080; font-weight: bold;">&#39;x&#39;</span>,<span style="color: #660099;">yref</span>=<span style="color: #008080; font-weight: bold;">&#39;y&#39;</span>,
+        <span style="color: #660099;">text</span>=<span style="color: #008080; font-weight: bold;">&#39;household05 &#39;</span>,
+        <span style="color: #660099;">font</span>=<span style="color: #000080;">dict</span>(<span style="color: #660099;">family</span>=<span style="color: #008080; font-weight: bold;">&#39;Courier New, monospace&#39;</span>,<span style="color: #660099;">size</span>=<span style="color: #1750eb;">16</span>,<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;#ffffff&#39;</span>),
+        <span style="color: #660099;">showarrow</span>=<span style="color: #0033b3;">True</span>,
+        <span style="color: #660099;">ax</span>=<span style="color: #1750eb;">20</span>,<span style="color: #660099;">ay</span>=-<span style="color: #1750eb;">30</span>,<span style="color: #660099;">align</span>=<span style="color: #008080; font-weight: bold;">&#39;center&#39;</span>,<span style="color: #660099;">arrowhead</span>=<span style="color: #1750eb;">2</span>,<span style="color: #660099;">arrowsize</span>=<span style="color: #1750eb;">1</span>,<span style="color: #660099;">arrowwidth</span>=<span style="color: #1750eb;">2</span>,<span style="color: #660099;">arrowcolor</span>=<span style="color: #008080; font-weight: bold;">&#39;#636363&#39;</span>,
+        <span style="color: #660099;">bordercolor</span>=<span style="color: #008080; font-weight: bold;">&#39;#c7c7c7&#39;</span>,<span style="color: #660099;">borderwidth</span>=<span style="color: #1750eb;">2</span>,<span style="color: #660099;">borderpad</span>=<span style="color: #1750eb;">4</span>,<span style="color: #660099;">bgcolor</span>=<span style="color: #008080; font-weight: bold;">&#39;#ff7f0e&#39;</span>,<span style="color: #660099;">opacity</span>=<span style="color: #1750eb;">0.8</span>),
+<span style="color: #000080;">dict</span>(<span style="color: #660099;">x</span>=<span style="color: #1750eb;">14</span>,<span style="color: #660099;">y</span>=<span style="color: #1750eb;">400</span>,
+        <span style="color: #660099;">xref</span>=<span style="color: #008080; font-weight: bold;">&#39;x&#39;</span>,<span style="color: #660099;">yref</span>=<span style="color: #008080; font-weight: bold;">&#39;y&#39;</span>,
+        <span style="color: #660099;">text</span>=<span style="color: #008080; font-weight: bold;">&#39;household06&#39;</span>,
+        <span style="color: #660099;">font</span>=<span style="color: #000080;">dict</span>(<span style="color: #660099;">family</span>=<span style="color: #008080; font-weight: bold;">&#39;Courier New, monospace&#39;</span>,<span style="color: #660099;">size</span>=<span style="color: #1750eb;">16</span>,<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;#ffffff&#39;</span>),
+        <span style="color: #660099;">showarrow</span>=<span style="color: #0033b3;">True</span>,
+        <span style="color: #660099;">ax</span>=<span style="color: #1750eb;">20</span>,<span style="color: #660099;">ay</span>=-<span style="color: #1750eb;">30</span>,<span style="color: #660099;">align</span>=<span style="color: #008080; font-weight: bold;">&#39;center&#39;</span>,<span style="color: #660099;">arrowhead</span>=<span style="color: #1750eb;">2</span>,<span style="color: #660099;">arrowsize</span>=<span style="color: #1750eb;">1</span>,<span style="color: #660099;">arrowwidth</span>=<span style="color: #1750eb;">2</span>,<span style="color: #660099;">arrowcolor</span>=<span style="color: #008080; font-weight: bold;">&#39;#636363&#39;</span>,
+        <span style="color: #660099;">bordercolor</span>=<span style="color: #008080; font-weight: bold;">&#39;#c7c7c7&#39;</span>,<span style="color: #660099;">borderwidth</span>=<span style="color: #1750eb;">2</span>,<span style="color: #660099;">borderpad</span>=<span style="color: #1750eb;">4</span>,<span style="color: #660099;">bgcolor</span>=<span style="color: #008080; font-weight: bold;">&#39;#ff7f0e&#39;</span>,<span style="color: #660099;">opacity</span>=<span style="color: #1750eb;">0.8</span>),
+    ])
+fig = go.Figure(<span style="color: #660099;">data</span>=data, <span style="color: #660099;">layout</span>=layout)
+plotly.offline.plot(fig, <span style="color: #660099;">filename</span>=<span style="color: #008080; font-weight: bold;">&#39;poltywork.html&#39;</span>)</pre>
+<p><b>#Section two:</b></p>
+<p><b>Since there are so many electricity appliances, I plan to analyze these 
+appliances consumption of electricity day by day.</b></p>
+<p><b>#Data process: I will get the average consumption with each day on 
+different appliance.</b></p>
+<p><b>#household 04 </b></p>
+<table border="0" cellpadding="0" cellspacing="0" width="1846" style="border-collapse: collapse; width: 1387pt">
+	<colgroup>
+		<col width="125" /><col width="205" span="2" /><col width="258" />
+		<col width="205" span="2" /><col width="233" />
+		<col width="205" span="2" />
+	</colgroup>
+	<tr height="45">
+		<td height="45" class="xl68" width="125">Date</td>
+		<td class="xl67" width="205">household04-01(Fridge)</td>
+		<td class="xl67" width="205">household04-02( Kitchen)</td>
+		<td class="xl67" width="258">household04-03(Lamp)</td>
+		<td class="xl67" width="205">household04-04(Stereo and laptop)</td>
+		<td class="xl67" width="205">household04-05(Freezer)</td>
+		<td class="xl67" width="233">household04-06(Tablet)</td>
+		<td class="xl67" width="205">household04-07(Entertainment)</td>
+		<td class="xl67" width="205">household04-08(Microwave)</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/6/27</td>
+		<td class="xl65">30.46848156</td>
+		<td class="xl65">7.964380741</td>
+		<td class="xl65">3.208773518</td>
+		<td class="xl65">14.75401851</td>
+		<td class="xl65">205.2504117</td>
+		<td class="xl65">1.113283406</td>
+		<td class="xl65">25.85834822</td>
+		<td class="xl65">-0.733712959</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/6/28</td>
+		<td class="xl65">27.11914783</td>
+		<td class="xl65">19.46355128</td>
+		<td class="xl65">2.693002001</td>
+		<td class="xl65">15.71338879</td>
+		<td class="xl65">173.7325252</td>
+		<td class="xl65">0.767873755</td>
+		<td class="xl65">22.06233787</td>
+		<td class="xl65">17.55916013</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/6/29</td>
+		<td class="xl65">25.1737293</td>
+		<td class="xl65">9.532874855</td>
+		<td class="xl65">2.246669901</td>
+		<td class="xl65">15.67872164</td>
+		<td class="xl65">157.7518993</td>
+		<td class="xl65">0.439174157</td>
+		<td class="xl65">13.20643464</td>
+		<td class="xl65">16.87115278</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/6/30</td>
+		<td class="xl65">35.67066691</td>
+		<td class="xl65">9.006127177</td>
+		<td class="xl65">3.890687552</td>
+		<td class="xl65">14.92897611</td>
+		<td class="xl65">249.4513319</td>
+		<td class="xl65">1.078697877</td>
+		<td class="xl65">19.82184481</td>
+		<td class="xl65">57.93400276</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/1</td>
+		<td class="xl65">32.14240989</td>
+		<td class="xl65">8.109000874</td>
+		<td class="xl65">2.058413679</td>
+		<td class="xl65">15.67609855</td>
+		<td class="xl65">227.9856146</td>
+		<td class="xl65">1.094897799</td>
+		<td class="xl65">31.77415904</td>
+		<td class="xl65">16.28022111</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/2</td>
+		<td class="xl65">30.26500398</td>
+		<td class="xl65">9.265389245</td>
+		<td class="xl65">2.047831689</td>
+		<td class="xl65">20.75677046</td>
+		<td class="xl65">223.202231</td>
+		<td class="xl65">1.04135864</td>
+		<td class="xl65">45.24372909</td>
+		<td class="xl65">4.776030632</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/3</td>
+		<td class="xl65">31.38949179</td>
+		<td class="xl65">22.05989656</td>
+		<td class="xl65">5.839892379</td>
+		<td class="xl65">17.82693002</td>
+		<td class="xl65">221.0915548</td>
+		<td class="xl65">1.073933008</td>
+		<td class="xl65">35.69754623</td>
+		<td class="xl65">7.118391641</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/4</td>
+		<td class="xl65">29.59385853</td>
+		<td class="xl65">7.916694095</td>
+		<td class="xl65">2.688018123</td>
+		<td class="xl65">18.99369989</td>
+		<td class="xl65">205.27732</td>
+		<td class="xl65">1.176115189</td>
+		<td class="xl65">45.67984557</td>
+		<td class="xl65">5.773160895</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/5</td>
+		<td class="xl65">30.76605938</td>
+		<td class="xl65">4.140087181</td>
+		<td class="xl65">2.876725231</td>
+		<td class="xl65">18.71997789</td>
+		<td class="xl65">201.6246765</td>
+		<td class="xl65">1.04410415</td>
+		<td class="xl65">23.57089348</td>
+		<td class="xl65">5.493617033</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/6</td>
+		<td class="xl65">27.03266393</td>
+		<td class="xl65">8.87089097</td>
+		<td class="xl65">2.521953486</td>
+		<td class="xl65">20.10823547</td>
+		<td class="xl65">196.6159789</td>
+		<td class="xl65">1.017644557</td>
+		<td class="xl65">50.3450601</td>
+		<td class="xl65">9.586197525</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/7</td>
+		<td class="xl65">27.74038949</td>
+		<td class="xl65">5.581002526</td>
+		<td class="xl65">6.368863572</td>
+		<td class="xl65">26.91724836</td>
+		<td class="xl65">196.0944621</td>
+		<td class="xl65">1.043038167</td>
+		<td class="xl65">21.71350073</td>
+		<td class="xl65">15.42992335</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/8</td>
+		<td class="xl65">28.84080706</td>
+		<td class="xl65">9.225582824</td>
+		<td class="xl65">5.469059057</td>
+		<td class="xl65">19.95987683</td>
+		<td class="xl65">204.8904064</td>
+		<td class="xl65">1.034708606</td>
+		<td class="xl65">38.57552728</td>
+		<td class="xl65">5.526607096</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/9</td>
+		<td class="xl65">30.98174478</td>
+		<td class="xl65">6.368608776</td>
+		<td class="xl65">3.666539528</td>
+		<td class="xl65">20.58582008</td>
+		<td class="xl65">201.5865524</td>
+		<td class="xl65">1.016828866</td>
+		<td class="xl65">33.28337986</td>
+		<td class="xl65">8.93971949</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/10</td>
+		<td class="xl65">30.67284512</td>
+		<td class="xl65">9.168580086</td>
+		<td class="xl65">3.406587808</td>
+		<td class="xl65">22.85607757</td>
+		<td class="xl65">202.2815315</td>
+		<td class="xl65">1.069729361</td>
+		<td class="xl65">24.61368295</td>
+		<td class="xl65">37.90794424</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/11</td>
+		<td class="xl65">30.24993885</td>
+		<td class="xl65">12.70070415</td>
+		<td class="xl65">3.518503578</td>
+		<td class="xl65">25.32884575</td>
+		<td class="xl65">197.1821043</td>
+		<td class="xl65">1.068668627</td>
+		<td class="xl65">19.88646047</td>
+		<td class="xl65">10.73408651</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/12</td>
+		<td class="xl65">29.02774255</td>
+		<td class="xl65">8.212333342</td>
+		<td class="xl65">3.808291224</td>
+		<td class="xl65">14.7174433</td>
+		<td class="xl65">194.2199741</td>
+		<td class="xl65">1.058455885</td>
+		<td class="xl65">43.38083721</td>
+		<td class="xl65">13.37283853</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/13</td>
+		<td class="xl65">27.63516136</td>
+		<td class="xl65">15.63376866</td>
+		<td class="xl65">6.517582998</td>
+		<td class="xl65">19.31629783</td>
+		<td class="xl65">197.4439248</td>
+		<td class="xl65">1.060714728</td>
+		<td class="xl65">21.74350788</td>
+		<td class="xl65">12.90634219</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/14</td>
+		<td class="xl65">28.57002738</td>
+		<td class="xl65">5.16609575</td>
+		<td class="xl65">2.283635417</td>
+		<td class="xl65">14.74201756</td>
+		<td class="xl65">192.3170786</td>
+		<td class="xl65">1.011885747</td>
+		<td class="xl65">6.15494838</td>
+		<td class="xl65">26.11389458</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">······</td>
+		<td class="xl66">······</td>
+		<td class="xl66">······</td>
+		<td class="xl66">······</td>
+		<td class="xl66">······</td>
+		<td class="xl66">······</td>
+		<td class="xl66">······</td>
+		<td class="xl66">······</td>
+		<td class="xl66">······</td>
+	</tr>
+</table>
+<p><img alt="" src="img16.gif" /></p>
+<p><img alt="" src="img18.gif" /></p>
+<p>&nbsp;<b>#household 05</b></p>
+<table border="0" cellpadding="0" cellspacing="0" width="1782" style="border-collapse: collapse; width: 1339pt">
+	<colgroup>
+		<col width="122" /><col width="205" span="3" /><col width="225" />
+		<col width="205" span="4" />
+	</colgroup>
+	<tr height="45">
+		<td height="45" class="xl68" width="122">Date</td>
+		<td class="xl65" width="205">household05-01(Tablet)</td>
+		<td class="xl65" width="205">household05-02( Coffee machine)</td>
+		<td class="xl65" width="205">household05-03(Fountain)</td>
+		<td class="xl65" width="225">household05-04(Microwave)</td>
+		<td class="xl65" width="205">household05-05(Fridge)</td>
+		<td class="xl65" width="205">household05-06(Entertainment)</td>
+		<td class="xl65" width="205">household05-07( PC)</td>
+		<td class="xl65" width="205">household05-08(Kettle)</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/6/27</td>
+		<td class="xl66">5.788373875</td>
+		<td class="xl66">12.65581737</td>
+		<td class="xl66">12.11269389</td>
+		<td class="xl66">7.292829274</td>
+		<td class="xl66">50.51282048</td>
+		<td class="xl66">9.296252092</td>
+		<td class="xl66">32.27356654</td>
+		<td class="xl66">6.981370483</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/6/28</td>
+		<td class="xl66">3.698902079</td>
+		<td class="xl66">12.42429496</td>
+		<td class="xl66">7.004582233</td>
+		<td class="xl66">4.360124048</td>
+		<td class="xl66">46.56841788</td>
+		<td class="xl66">8.465217607</td>
+		<td class="xl66">23.40017114</td>
+		<td class="xl66">-0.184853676</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/6/29</td>
+		<td class="xl66">3.932420439</td>
+		<td class="xl66">11.15777865</td>
+		<td class="xl66">11.05206185</td>
+		<td class="xl66">7.836880935</td>
+		<td class="xl66">48.03508611</td>
+		<td class="xl66">7.004559416</td>
+		<td class="xl66">28.29537918</td>
+		<td class="xl66">-0.197627315</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/6/30</td>
+		<td class="xl66">4.555607067</td>
+		<td class="xl66">7.413121924</td>
+		<td class="xl66">12.10095424</td>
+		<td class="xl66">13.37122262</td>
+		<td class="xl66">56.42025323</td>
+		<td class="xl66">11.57992275</td>
+		<td class="xl66">27.56191327</td>
+		<td class="xl66">-0.188797676</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/1</td>
+		<td class="xl66">4.507014394</td>
+		<td class="xl66">5.159125437</td>
+		<td class="xl66">12.01632216</td>
+		<td class="xl66">5.450227678</td>
+		<td class="xl66">54.80805093</td>
+		<td class="xl66">12.33045352</td>
+		<td class="xl66">30.76548093</td>
+		<td class="xl66">-0.182217125</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/2</td>
+		<td class="xl66">4.45652795</td>
+		<td class="xl66">5.269259394</td>
+		<td class="xl66">12.13305333</td>
+		<td class="xl66">5.501927438</td>
+		<td class="xl66">58.61073133</td>
+		<td class="xl66">11.1292829</td>
+		<td class="xl66">37.89940455</td>
+		<td class="xl66">-0.198356481</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/3</td>
+		<td class="xl66">4.498850023</td>
+		<td class="xl66">4.754063745</td>
+		<td class="xl66">12.11472425</td>
+		<td class="xl66">30.31564458</td>
+		<td class="xl66">50.01659627</td>
+		<td class="xl66">11.77736209</td>
+		<td class="xl66">36.87720716</td>
+		<td class="xl66">-0.194236111</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/4</td>
+		<td class="xl66">4.53740941</td>
+		<td class="xl66">1.450119868</td>
+		<td class="xl66">12.14620558</td>
+		<td class="xl66">40.11051686</td>
+		<td class="xl66">51.83511916</td>
+		<td class="xl66">10.68400676</td>
+		<td class="xl66">28.10482208</td>
+		<td class="xl66">-0.189101843</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/5</td>
+		<td class="xl66">4.507678361</td>
+		<td class="xl66">0</td>
+		<td class="xl66">12.0525575</td>
+		<td class="xl66">5.491720937</td>
+		<td class="xl66">50.14088168</td>
+		<td class="xl66">13.79570932</td>
+		<td class="xl66">28.11024585</td>
+		<td class="xl66">-0.687986111</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/6</td>
+		<td class="xl66">4.587920132</td>
+		<td class="xl66">6.06006169</td>
+		<td class="xl66">12.10055674</td>
+		<td class="xl66">5.494735932</td>
+		<td class="xl66">46.92152434</td>
+		<td class="xl66">10.28143282</td>
+		<td class="xl66">28.84830189</td>
+		<td class="xl66">-0.793796296</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/7</td>
+		<td class="xl66">4.516875564</td>
+		<td class="xl66">4.51912948</td>
+		<td class="xl66">11.96785045</td>
+		<td class="xl66">5.447459813</td>
+		<td class="xl66">48.3627364</td>
+		<td class="xl66">10.2195189</td>
+		<td class="xl66">27.76472551</td>
+		<td class="xl66">-0.202724523</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/8</td>
+		<td class="xl66">4.475217242</td>
+		<td class="xl66">6.815406854</td>
+		<td class="xl66">12.06100226</td>
+		<td class="xl66">5.468194086</td>
+		<td class="xl66">53.42091636</td>
+		<td class="xl66">12.81915556</td>
+		<td class="xl66">40.70727158</td>
+		<td class="xl66">-0.195930547</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/9</td>
+		<td class="xl66">4.364309546</td>
+		<td class="xl66">6.964448124</td>
+		<td class="xl66">12.07216058</td>
+		<td class="xl66">5.491399667</td>
+		<td class="xl66">49.7255509</td>
+		<td class="xl66">11.84400755</td>
+		<td class="xl66">31.37180528</td>
+		<td class="xl66">-0.202547676</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/10</td>
+		<td class="xl66">4.507948844</td>
+		<td class="xl66">4.370957545</td>
+		<td class="xl66">12.11157946</td>
+		<td class="xl66">5.494538228</td>
+		<td class="xl66">54.08396051</td>
+		<td class="xl66">15.30829103</td>
+		<td class="xl66">31.31151597</td>
+		<td class="xl66">-0.190427764</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/11</td>
+		<td class="xl66">4.311560813</td>
+		<td class="xl66">5.081851798</td>
+		<td class="xl66">12.10033403</td>
+		<td class="xl66">24.41835937</td>
+		<td class="xl66">49.87410587</td>
+		<td class="xl66">30.05092354</td>
+		<td class="xl66">29.7063075</td>
+		<td class="xl66">-0.206284722</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/12</td>
+		<td class="xl66">4.526417023</td>
+		<td class="xl66">5.050555193</td>
+		<td class="xl66">12.07640767</td>
+		<td class="xl66">5.476917803</td>
+		<td class="xl66">50.88136813</td>
+		<td class="xl66">13.83760788</td>
+		<td class="xl66">31.72371223</td>
+		<td class="xl66">-0.201851852</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/13</td>
+		<td class="xl66">4.487233651</td>
+		<td class="xl66">5.898440186</td>
+		<td class="xl66">12.09743654</td>
+		<td class="xl66">5.5056344</td>
+		<td class="xl66">52.20749609</td>
+		<td class="xl66">13.92529293</td>
+		<td class="xl66">27.84853907</td>
+		<td class="xl66">-0.203113426</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">2012/7/14</td>
+		<td class="xl66">4.537213086</td>
+		<td class="xl66">9.430620909</td>
+		<td class="xl66">11.97814787</td>
+		<td class="xl66">5.444529567</td>
+		<td class="xl66">52.95243794</td>
+		<td class="xl66">7.963478841</td>
+		<td class="xl66">27.95268517</td>
+		<td class="xl66">-0.195666199</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl69">······</td>
+		<td class="xl67">······</td>
+		<td class="xl67">······</td>
+		<td class="xl67">······</td>
+		<td class="xl67">······</td>
+		<td class="xl67">······</td>
+		<td class="xl67">······</td>
+		<td class="xl67">······</td>
+		<td class="xl67">······</td>
+	</tr>
+</table>
+<p><img alt="" src="img1A.gif" /></p>
+<p><img alt="" src="img1C.gif" /></p>
+<p><b>#household 06</b></p>
+<table border="0" cellpadding="0" cellspacing="0" width="1660" style="border-collapse: collapse; width: 1246pt">
+	<colgroup>
+		<col width="142" /><col width="276" /><col width="268" />
+		<col width="205" span="2" /><col width="219" /><col width="165" />
+		<col width="180" />
+	</colgroup>
+	<tr height="45">
+		<td height="45" class="xl69" width="142">Date</td>
+		<td class="xl65" width="276">household06-01( Lamp)</td>
+		<td class="xl65" width="268">household06-02( Laptop)</td>
+		<td class="xl65" width="205">household06-03(Router)</td>
+		<td class="xl65" width="205">household06-04<br />
+		(Coffee machine)</td>
+		<td class="xl65" width="219">household06-05(Entertainment)</td>
+		<td class="xl65" width="165">household06-06(Fridge)</td>
+		<td class="xl65" width="180">household06-07( Kettle)</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/6/27</td>
+		<td class="xl66">0</td>
+		<td class="xl66">18.37810351</td>
+		<td class="xl66">20.07513153</td>
+		<td class="xl67">0</td>
+		<td class="xl66">25.6483183</td>
+		<td class="xl66">12.08455209</td>
+		<td class="xl66">6.279682104</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/6/28</td>
+		<td class="xl66">-0.168655105</td>
+		<td class="xl66">4.576196624</td>
+		<td class="xl66">16.65066555</td>
+		<td class="xl66">5.423568537</td>
+		<td class="xl66">12.3891109</td>
+		<td class="xl66">9.923218896</td>
+		<td class="xl66">-0.163525103</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/6/29</td>
+		<td class="xl66">-0.256481481</td>
+		<td class="xl66">3.959049158</td>
+		<td class="xl66">14.75331897</td>
+		<td class="xl66">5.132852903</td>
+		<td class="xl66">41.87998759</td>
+		<td class="xl66">9.410207354</td>
+		<td class="xl66">-0.256417124</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/6/30</td>
+		<td class="xl66">-0.004648897</td>
+		<td class="xl66">5.694665408</td>
+		<td class="xl66">20.21824736</td>
+		<td class="xl66">9.172439229</td>
+		<td class="xl66">29.02082024</td>
+		<td class="xl66">19.45183102</td>
+		<td class="xl66">4.453567176</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/1</td>
+		<td class="xl66">-0.001631944</td>
+		<td class="xl66">8.598873581</td>
+		<td class="xl66">20.13485567</td>
+		<td class="xl66">5.005119151</td>
+		<td class="xl66">26.56080709</td>
+		<td class="xl66">12.73181044</td>
+		<td class="xl66">0</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/2</td>
+		<td class="xl66">0</td>
+		<td class="xl66">5.380449739</td>
+		<td class="xl66">20.12658807</td>
+		<td class="xl66">3.253564356</td>
+		<td class="xl66">15.00970093</td>
+		<td class="xl66">11.49793178</td>
+		<td class="xl66">4.47008466</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/3</td>
+		<td class="xl66">0</td>
+		<td class="xl66">5.271486602</td>
+		<td class="xl66">20.09892247</td>
+		<td class="xl67">0</td>
+		<td class="xl66">23.51993258</td>
+		<td class="xl66">12.05972205</td>
+		<td class="xl66">0.447428798</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/4</td>
+		<td class="xl66">0</td>
+		<td class="xl66">5.269813274</td>
+		<td class="xl66">20.11479132</td>
+		<td class="xl67">0</td>
+		<td class="xl66">25.0245774</td>
+		<td class="xl66">10.80440078</td>
+		<td class="xl66">5.0375584</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/5</td>
+		<td class="xl66">0.000125474</td>
+		<td class="xl66">8.092812763</td>
+		<td class="xl66">20.10060067</td>
+		<td class="xl67">0</td>
+		<td class="xl66">58.02659887</td>
+		<td class="xl66">11.67276462</td>
+		<td class="xl66">6.628265033</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/6</td>
+		<td class="xl66">0.000125474</td>
+		<td class="xl66">8.398465105</td>
+		<td class="xl66">20.09536863</td>
+		<td class="xl66">1.854459554</td>
+		<td class="xl66">28.28819804</td>
+		<td class="xl66">10.60393897</td>
+		<td class="xl66">4.61122112</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/7</td>
+		<td class="xl66">-0.007063736</td>
+		<td class="xl66">5.621408873</td>
+		<td class="xl66">20.09092634</td>
+		<td class="xl66">4.191104559</td>
+		<td class="xl66">35.71895656</td>
+		<td class="xl66">14.01650616</td>
+		<td class="xl67">4.99E-05</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/8</td>
+		<td class="xl66">0</td>
+		<td class="xl66">5.682903195</td>
+		<td class="xl66">20.17740295</td>
+		<td class="xl66">4.665504104</td>
+		<td class="xl66">27.16829097</td>
+		<td class="xl66">12.10049992</td>
+		<td class="xl66">9.409071123</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/9</td>
+		<td class="xl67">5.03E-05</td>
+		<td class="xl66">5.622491614</td>
+		<td class="xl66">20.15272356</td>
+		<td class="xl66">0.000126698</td>
+		<td class="xl66">20.45186145</td>
+		<td class="xl66">11.55857366</td>
+		<td class="xl66">8.490851924</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/10</td>
+		<td class="xl67">2.55E-05</td>
+		<td class="xl66">5.617693102</td>
+		<td class="xl66">20.17582347</td>
+		<td class="xl66">3.962522567</td>
+		<td class="xl66">23.67030667</td>
+		<td class="xl66">12.16586694</td>
+		<td class="xl66">3.812063264</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/11</td>
+		<td class="xl66">0</td>
+		<td class="xl66">16.43994266</td>
+		<td class="xl66">20.11992464</td>
+		<td class="xl66">2.906151443</td>
+		<td class="xl66">15.11648295</td>
+		<td class="xl66">11.90864247</td>
+		<td class="xl66">5.953832106</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/12</td>
+		<td class="xl66">-0.014513889</td>
+		<td class="xl66">16.24128933</td>
+		<td class="xl66">19.92204068</td>
+		<td class="xl66">7.732680966</td>
+		<td class="xl66">25.87807397</td>
+		<td class="xl66">11.23722729</td>
+		<td class="xl66">20.81913379</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/13</td>
+		<td class="xl66">-0.023643531</td>
+		<td class="xl66">8.464804597</td>
+		<td class="xl66">19.57787965</td>
+		<td class="xl66">-0.023642374</td>
+		<td class="xl66">20.96474294</td>
+		<td class="xl66">10.15075173</td>
+		<td class="xl66">5.484239816</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">2012/7/14</td>
+		<td class="xl66">-0.636270846</td>
+		<td class="xl66">0.302729529</td>
+		<td class="xl66">6.655883716</td>
+		<td class="xl66">-0.63630787</td>
+		<td class="xl66">4.87754294</td>
+		<td class="xl66">3.383306167</td>
+		<td class="xl66">-0.63630787</td>
+	</tr>
+	<tr height="19">
+		<td height="19" class="xl70">······</td>
+		<td class="xl68">······</td>
+		<td class="xl68">······</td>
+		<td class="xl68">······</td>
+		<td class="xl68">······</td>
+		<td class="xl68">······</td>
+		<td class="xl68">······</td>
+		<td class="xl68">······</td>
+	</tr>
+</table>
+<p><img alt="" src="img1E.gif" /></p>
+<p><img alt="" src="img20.gif" /></p>
+<p><b>Animation and interaction in this section:</b></p>
+<p>①：The zoom of&nbsp; data area can be expand by your mouse, when you click 
+your mouse and pull up your mouse while the zoom of data area will expand 
+itself.</p>
+<p>#Altair Code used in python：</p>
+<pre style="background-color: #ffffff; color: #080808; font-family: 'JetBrains Mono',monospace; font-size: 9.8pt;"><span style="color: #0033b3;">mport </span>pandas <span style="color: #0033b3;">as </span>pd
+<span style="color: #0033b3;">import </span>altair <span style="color: #0033b3;">as </span>alt
+<span style="color: #0033b3;">import </span>numpy <span style="color: #0033b3;">as </span>np
+household_data= pd.read_excel(<span style="color: #008080; font-weight: bold;">r&#39;C:\Users\13448\Desktop\new\datatest.xlsx&#39;</span>)
+<span style="color: #8c8c8c; font-style: italic;">#print(household_data)
+#interval = alt.selection_interval()
+</span>chart1=alt.Chart(household_data).mark_line(<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;#20FCBC&#39;</span>).encode(
+    <span style="color: #660099;">x </span>=alt.X(<span style="color: #008080; font-weight: bold;">&#39;Date&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Time[year/month/day]&#39;</span>) ,
+    <span style="color: #660099;">y </span>= alt.Y(<span style="color: #008080; font-weight: bold;">&#39;TAP20&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Lamp-Electricity-Comsumptation&#39;</span>) ,
+
+).properties(
+    <span style="color: #660099;">width</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">height</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;household06-Lamp&#39;
+</span>).interactive()
+
+chart2=alt.Chart(household_data).mark_line(<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;#e30000&#39;</span>).encode(
+    <span style="color: #660099;">x </span>=alt.X(<span style="color: #008080; font-weight: bold;">&#39;Date&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Time[year/month/day]&#39;</span>) ,
+    <span style="color: #660099;">y </span>= alt.Y(<span style="color: #008080; font-weight: bold;">&#39;TAP21&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Laptop-Electricity-Comsumptation&#39;</span>) ,
+
+).properties(
+    <span style="color: #660099;">width</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">height</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;household06-Laptop&#39;
+</span>).interactive()
+
+chart3 = alt.Chart(household_data).mark_line(<span style="color: #660099;">opacity</span>=<span style="color: #1750eb;">0.3</span>,<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;#626262&#39;</span>).encode(
+    <span style="color: #660099;">x</span>=alt.X(<span style="color: #008080; font-weight: bold;">&#39;Date&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Time[year/month/day]&#39;</span>),
+    <span style="color: #660099;">y</span>=alt.Y(<span style="color: #008080; font-weight: bold;">&#39;TAP22&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Router-Electricity-Comsumptation&#39;</span>) ,
+
+).properties(
+    <span style="color: #660099;">width</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">height</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;household06-Router&#39;
+</span>).interactive()
+
+chart4 = alt.Chart(household_data).mark_line(<span style="color: #660099;">opacity</span>=<span style="color: #1750eb;">0.3</span>,<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;#ffff15&#39;</span>).encode(
+    <span style="color: #660099;">x</span>=alt.X(<span style="color: #008080; font-weight: bold;">&#39;Date&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Time[year/month/day]&#39;</span>),
+    <span style="color: #660099;">y</span>=alt.Y(<span style="color: #008080; font-weight: bold;">&#39;TAP23&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Coffee machine-Electricity-Comsumptation&#39;</span>) ,
+
+).properties(
+    <span style="color: #660099;">width</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">height</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;household06-Coffee machine&#39;
+</span>).interactive()
+
+chart5 = alt.Chart(household_data).mark_line(<span style="color: #660099;">opacity</span>=<span style="color: #1750eb;">0.3</span>,<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;#929391&#39;</span>).encode(
+    <span style="color: #660099;">x</span>=alt.X(<span style="color: #008080; font-weight: bold;">&#39;Date&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Time[year/month/day]&#39;</span>),
+    <span style="color: #660099;">y</span>=alt.Y(<span style="color: #008080; font-weight: bold;">&#39;TAP24&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Entertainment  -Electricity-Comsumptation&#39;</span>) ,
+
+).properties(
+    <span style="color: #660099;">width</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">height</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;household06-Entertainment &#39;
+</span>).interactive()
+
+chart6 = alt.Chart(household_data).mark_line(<span style="color: #660099;">opacity</span>=<span style="color: #1750eb;">0.3</span>,<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;#0e8eff&#39;</span>).encode(
+    <span style="color: #660099;">x</span>=alt.X(<span style="color: #008080; font-weight: bold;">&#39;Date&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Time[year/month/day]&#39;</span>),
+    <span style="color: #660099;">y</span>=alt.Y(<span style="color: #008080; font-weight: bold;">&#39;TAP25&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Fridge-Electricity-Comsumptation&#39;</span>) ,
+
+).properties(
+    <span style="color: #660099;">width</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">height</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;household06-Fridge&#39;
+</span>).interactive()
+
+chart7 = alt.Chart(household_data).mark_line(<span style="color: #660099;">opacity</span>=<span style="color: #1750eb;">0.3</span>,<span style="color: #660099;">color</span>=<span style="color: #008080; font-weight: bold;">&#39;#ff7f0e&#39;</span>).encode(
+    <span style="color: #660099;">x</span>=alt.X(<span style="color: #008080; font-weight: bold;">&#39;Date&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Time[year/month/day]&#39;</span>),
+    <span style="color: #660099;">y</span>=alt.Y(<span style="color: #008080; font-weight: bold;">&#39;TAP26&#39;</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;Kettle-Electricity-Comsumptation&#39;</span>) ,
+
+).properties(
+    <span style="color: #660099;">width</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">height</span>=<span style="color: #1750eb;">300</span>,<span style="color: #660099;">title</span>=<span style="color: #008080; font-weight: bold;">&#39;household06-Kettle &#39;
+</span>).interactive()
+
+<span style="color: #8c8c8c; font-style: italic;">#chart8 = alt.Chart(household_data).mark_line(opacity=0.3,color=&#39;#ff7f86&#39;).encode(
+ #   x=alt.X(&#39;Date&#39;,title=&#39;Time[year/month/day]&#39;),
+  #  y=alt.Y(&#39;TAP27&#39;,title=&#39;Kettle-Electricity-Comsumptation&#39;) ,
+
+#).properties(
+ #   width=300,height=300,title=&#39;household06-Kettle&#39;
+#).interactive()
+
+    #.properties(
+   # selection=interval
+#)
+</span>chartS1=chart1|chart2|chart3|chart4
+chartS1.save(<span style="color: #008080; font-weight: bold;">&#39;demo1.html&#39;</span>)
+chartS2=chart5|chart6|chart7
+chartS2.save(<span style="color: #008080; font-weight: bold;">&#39;demo2.html&#39;</span>)</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>
